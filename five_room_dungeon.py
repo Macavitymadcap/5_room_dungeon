@@ -1,7 +1,6 @@
 # Imports
 from time import sleep
 from random import randint
-from sys import stdout
 
 # Dice
 def roll_d(x):
@@ -23,46 +22,37 @@ class Character:
     self.attack_damage = attack_damage
 
 class PlayerCharacter(Character):
-    def __init__(self, name, hp, ac, armour_name, attack_name, attack_bonus, attack_damage, attack_damage_bonus, max_hp, inventory=None):
+    def __init__(self, name, hp, ac, armour_name, attack_name, attack_bonus, attack_damage, attack_damage_bonus, max_hp, attack_damage_string, inventory=None):
         super().__init__(name, hp, ac, armour_name, attack_name, attack_bonus, attack_damage_bonus, attack_damage)
         self.max_hp = max_hp
+        self.attack_damage_string = attack_damage_string
         if inventory is None:
             self.inventory = []
         else:
             self.inventory = inventory
-
-    def add_item(self, item):
-        if item not in inventory:
-            self.inventory.append(item)
-
-    def remove_item(self, item):
-        if item in inventory:
-            self.inventory.remove(item)
+            
+    def inventory_string(self, inventory):
+        string = str(self.inventory).strip('[]').replace("'", "")
+        if len(string) <= 80:
+            return string
+        elif len(string) > 80 and len(string) <= 161:
+            first = inventory_string[0:80].rindex(" ")
+            new_string = string[0:first] + "\n" + string[first+1:]
+            return new_string.capitalize()
 
     def character_sheet(self):
         return f"""
-Name = {name}
-Class = {self.name.capitalize()}
-Hit Points = {self.hp}/{self.max_hp}
-Armour Class = {self.ac} ({self.armour_name})
-Attack = {self.attack_name.capitalize()}
-Attack Bonus = +{self.attack_bonus}
-Inventory = {self.inventory}"""
-
-class Spinner:
-    SYMBOLS = '|/-\\'
-
-    def __init__(self):
-        self.index = 0
-
-    def __call__(self):
-        stdout.write(Spinner.SYMBOLS[self.index] + '\b')
-        self.index = (self.index + 1) % len(Spinner.SYMBOLS)
+Name: {name}
+Class: {self.name.capitalize()}
+Hit Points: {self.hp}/{self.max_hp}
+Armour Class: {self.ac} ({self.armour_name})
+Attack: {self.attack_name.capitalize()}, +{self.attack_bonus} to hit, {self.attack_damage_string} damage
+Inventory: {self.inventory_string(self.inventory)}"""
 
 # Character Classes
-fighter = PlayerCharacter("fighter", 12, 17, "chainmail and shield", "longsword", 5, roll_d(8), 3, 12, ["longsword", "chainmail", "shield", "bundle of torches"])
-rogue = PlayerCharacter("rogue", 10, 14, "leather", "double daggers", 5, roll_mult_d(4, 2), 3, 10, ["two daggers", "leather armour", "bundle of torches"])
-wizard = PlayerCharacter("wizard", 8, 14, "mage armour", "firebolt", 5, roll_d(10), 0, 8, ["spellbook", "wand", "bundle of torches"])
+fighter = PlayerCharacter("fighter", 12, 17, "chainmail and shield", "longsword", 5, roll_d(8), 3, 12, "1d8 + 3 slashing", ["longsword", "chainmail", "shield", "bundle of torches"])
+rogue = PlayerCharacter("rogue", 10, 14, "leather", "double daggers", 5, roll_mult_d(4, 2), 3, 10, "2d4 + 3 piercing", ["two daggers", "leather armour", "bundle of torches"])
+wizard = PlayerCharacter("wizard", 8, 14, "mage armour", "firebolt", 5, roll_d(10), 0, 8, "1d10 fire", ["spellbook", "wand", "bundle of torches"])
 
 # Monsters
 animated_knife = Character("animated knife", 12, 17, "natural armour", "dagger", 4,  roll_d(4), 1)
@@ -203,7 +193,6 @@ def heal():
 professions = ["fighter", "wizard", "rogue"]
 yes_no = ["yes", "no"]
 wall_opt = ["apologise", "deflect", "double down"]
-spin = Spinner()
 
 # Character Creation
 name = input("Well met adventurer! What is your name?\n> ").capitalize()
@@ -258,44 +247,34 @@ else:
     player = wizard
 show_sheet(player)
 sleep(7)
-print("\nAnd now your adventure begins ...\n")
-sleep(1)
-for i in range(40):
-    spin()
-    sleep(0.1)
-Spinner()
-print("")
+print("\nAnd now your adventure begins ...")
+sleep(3)
 
 # Prologue
-print("\nLegend tells of a dungeon not far from town beneath Mt. Bryntor said to\ncontain treasures of incalculable wealth ...\n")
+print("\nLegend tells of a dungeon not far from town beneath Mt. Bryntor said to\ncontain treasures of incalculable wealth.\n")
 sleep(6)
-print("Incalculable not only because no one knows what the treasures are, but also\nbecause none have such wealth with which the treasures could be compared ...\n")
+print("Incalculable not only because no one knows what the treasures are, but also\nbecause none have such wealth with which the treasures could be compared.\n")
 sleep(6)
-print("Chief among the dungeon's claims to fame, however, is that no one has ever\nretrieved the treasures contained therein ...\n")
+print("Chief among the dungeon's claims to fame, however, is that no one has ever\nretrieved the treasures contained therein.\n")
 sleep(6)
-print("For the dungeon is filled with perilous puzzles, tyrannous traps, mighty\nmonsters and other such alliterative dangers ...\n")
+print("For the dungeon is filled with perilous puzzles, tyrannous traps, mighty\nmonsters and other such alliterative dangers.\n")
 sleep(6)
 if profession == "fighter":
-    print("Being a mighty fighter, however, you believe you have the strength needed to\novercome the obstacles inside the dungeon ...\n")
+    print("Being a mighty fighter, however, you believe you have the strength needed to\novercome the obstacles inside the dungeon.\n")
 elif profession == "wizard":
-    print("Being a wise wizard, however, you know you have the necessary intelligence to\nbest the perils contained within ...\n")
+    print("Being a wise wizard, however, you know you have the necessary intelligence to\nbest the perils contained within.\n")
 else:
-    print("Being a crafty rogue, however, you reckon you have the guile required to grab\nthe treasure and sneak out with your life ...\n")
+    print("Being a crafty rogue, however, you reckon you have the guile required to grab\nthe treasure and sneak out with your life.\n")
 sleep(6)
-print("And so you head off out of town in search of wealth, glory, and (most\nimportantly) the entrance to the dungeon.\n")
+print("And so you head off out of town in search of wealth, glory, and (most\nimportantly) the entrance to the dungeon.")
 sleep(6)
-for i in range(40):
-    spin()
-    sleep(0.1)
-Spinner()
-print("")
 
 # Room 1 - Puzzling Entrance
-print("\nHaving travelled many miles over treacherous terrain you come finally to the\nsite of the fabled dungeon ...\n")
+print("\nHaving travelled many miles over treacherous terrain you come finally to the\nsite of the fabled dungeon.\n")
 sleep(6)
-print("Carved into the south side of Mt. Bryntor you see a smooth rectangle, 6 foot\nhigh and 2 foot wide ...\n")
+print("Carved into the south side of Mt. Bryntor you see a smooth rectangle, 6 foot\nhigh and 2 foot wide.\n")
 sleep(6)
-print("You might call it a door save for the fact it lacks a feature vital to all\nportals: a handle, or any other means of opening it ...")
+print("You might call it a door save for the fact it lacks a feature vital to all\nportals: a handle, or any other means of opening it.")
 sleep(6)
 response = ""
 ent_opt_1 = ["go back home", "investigate the area"]
@@ -304,14 +283,14 @@ while response not in ent_opt_1:
     response = input("go back home/investigate the area\n> ").lower()
     if response == "go back home":
         sleep(1)
-        print("\nFor many a year will tale be told of how " + name + " the " + profession + "\ngave up on their epic quest at the first hurdle.\n")
+        print("\nFor many a year will tale be told of how " + name + " the " + profession + " gave up on their\nepic quest at the first hurdle.\n")
         sleep(5)
         print("Game Over!")
         sleep(2)
         quit()
     elif response == "investigate the area":
         sleep(1)
-        print("\nTaking a moment to survey the area a patch of stone of lighter grey than the\nrest of the mountain catches your eye just off to the left ...\n")
+        print("\nTaking a moment to survey the area a patch of stone of a lighter grey than the\nrest of the mountain catches your eye just off to the left.\n")
         sleep(5)
     else:
         choose_option()
@@ -328,24 +307,24 @@ while entrance_puzzle != ["clouds", "waves", "trees"]:
     if entrance_choice == "clouds":
         entrance_puzzle.append("clouds")
         sleep(1)
-        print("\nThe raised stone clicks into place ...")
+        print("\nThe raised stone clicks into place.")
     elif entrance_choice == "waves":
         entrance_puzzle.append("waves")
         sleep(1)
-        print("\nThe raised stone clicks into place ...")
+        print("\nThe raised stone clicks into place.")
     elif entrance_choice == "trees":
         entrance_puzzle.append("trees")
         sleep(1)
-        print("\nThe raised stone clicks into place ...")
+        print("\nThe raised stone clicks into place.")
     else:
         choose_option()
     if entrance_puzzle != ["clouds", "waves", "trees"] and len(entrance_puzzle) == 3:
         entrance_puzzle = []
         sleep(1)
-        print("\nYou look over to the would be door, it remains shut, and turning back you see\nthe buttons pop back up  ...")
+        print("\nYou look over to the would be door, it remains shut, and turning back you see\nthe buttons pop back up.")
         sleep(3)
 sleep(1)
-print("\nYou hear the groaning of stone on stone and glancing to your right see the door\nsliding away, revealing a tunnel that leads down below ...")
+print("\nYou hear the groaning of stone on stone and glancing to your right see the door\nsliding away, revealing a tunnel that leads down below.")
 sleep(6)
 ent_opt_2 = ["descend into the dungeon", "go back home"]
 response = ""
@@ -354,8 +333,8 @@ while response not in ent_opt_2:
     response = input("descend into the dungeon/go back home\n> ").lower()
     if response == "descend into the dungeon":
         sleep(1)
-        print("\nLighting a torch you enter the tunnel and make your way below ...\n")
-        sleep (3)
+        print("\nLighting a torch you enter the tunnel and make your way below.")
+        sleep(5)
     elif response == "go back home":
         sleep(1)
         print("\nFor many a year will the tale be told of how " + name + " the " + profession + "\nwas scared by the opening of a door.\n")
@@ -365,11 +344,6 @@ while response not in ent_opt_2:
         quit()
     else:
         choose_option()
-for i in range(40):
-    spin()
-    sleep(0.1)
-Spinner()
-print("")
 
 # Room 2 - Knife to Meet You
 print("\nThe tunnel goes on for 40 feet before opening up to a small chamber. On the\nsouth wall is a door, in the middle of the room is a table.")
@@ -466,8 +440,8 @@ while response not in knife_opt_7:
     response = input("walk into the corridor/flee the dungeon in terror\n").lower()
     if response == "walk into the corridor":
         sleep(1)
-        print("\nLighting another torch you journey onwards, deeper into the dungeon...\n")
-        sleep(2)
+        print("\nLighting another torch you journey onwards, deeper into the dungeon.")
+        sleep(4)
     elif response == "flee the dungeon in terror":
         sleep(1)
         print("\nYou came so far but fear got the best of you\n")
@@ -477,11 +451,6 @@ while response not in knife_opt_7:
         quit()
     else:
         choose_option()
-for i in range(40):
-    spin()
-    sleep(0.1)
-Spinner()
-print("")
 
 # Room 3 - The Flirtatious Wall
 print("\nYou walk on through the corridor until it eventually opens out into a circular\nchamber. Carved onto the east wall is a face.")
@@ -504,7 +473,7 @@ while response not in flirt_opt_1:
         sleep(4)
     else:
         choose_option()
-print("\nThe face is intricately carved and well detailed; the eyebrows are furrowed;\nage and experience are suggested by multiple wrinkles and scars; a great big\nbushy beard covers the lower half.")
+print("\nThe face is intricately carved and well detailed; the eyebrows are furrowed;\nage and experience are suggested by multiple wrinkles and scars and a great big\nbushy beard covers the lower half.")
 sleep(8)
 print("\nIt's eyes are tightly shut and its mouth is open a fraction on the left as if\nit were asleep.")
 sleep(5)
@@ -716,7 +685,7 @@ while response not in flirt_opt_4:
     if response == "sally forth":
         sleep(1)
         print("\nHaving spoken to the wall you push on deeper into the dungeon...\n")
-        sleep(2)
+        sleep(5)
     elif response == "go back home":
         sleep(1)
         print("\nThoroughly weirded out after speaking to a wall, you decide to give up and go home.")
@@ -724,11 +693,8 @@ while response not in flirt_opt_4:
         print("\nGame Over!")
         sleep(2)
         quit()
-for i in range(40):
-    spin()
-    sleep(0.1)
-Spinner()
-print("")
+    else:
+        choose_option()
 
 # Room 4 - The Skeletal Boss Fight
 print("The passageway opens up revealing a large chamber in the centre of which is a\nstone sarcophagus.")
@@ -802,6 +768,7 @@ while sarc_response not in sarc_opt:
 print("\nShrieking 'NOOOOOOOOOO!' the skeleton crumples to the ground finally dead\nrather than undead.")
 sleep(4)
 print("\nGrabbing the key from its neck you go over to the golden door, which now opens\nfor you, revealing a tunnel beyond.")
+player.inventory.append('golden key')
 sleep(4)
 boss_opt_2 = ["go forth", "back out"]
 response = ""
@@ -810,7 +777,7 @@ while response not in boss_opt_2:
     response = input("go forth/back out\n> ").lower()
     if response == "go forth":
         sleep(1)
-        print("\nLooking back at the skeletal remains heaped on the floor fully confidant you have\nbested the challenges of this dungeon you progress into the corridor.")
+        print("\nLooking back at the skeletal remains heaped on the floor fully confidant you have\nbested the challenges of this dungeon you progress into the corridor.\n")
         sleep(4)
     elif response == "back out":
         sleep(1)
@@ -821,11 +788,6 @@ while response not in boss_opt_2:
         quit()
     else:
         choose_option()
-for i in range(40):
-    spin()
-    sleep(0.1)
-Spinner()
-print("")
 
 # Room 5 - Pyrrhic Reward
 print("You come to to the end of the passage and dazzled by the reflections given off\nby your torchlight in the chamber you enter.")
@@ -845,12 +807,6 @@ while response not in reward_opt:
         print("\nYou start to scream, but soon even your breath is taken from you and all becomes\ndarkness ...")
         sleep(5)
         print("")
-        for i in range(40):
-            spin()
-            sleep(0.1)
-        Spinner()
-        print("")
-        sleep(1)
         print("\nEventually you come back to consciousness to the sound of stone scraping against\nstone. A smidgen of light slowly eeks out above your head revealing an opening.")
         sleep(5)
         print("\nLifting your head up you see your are in a large chamber with a golden door to\nthe side and the face of plucky adventurer infornt of you.")
@@ -878,4 +834,4 @@ while response not in reward_opt:
         choose_option()
 print("\nThe End")
 sleep(3)
-print("\nCoded by\nDaniel Kiernan.\n\nBeta tested by\nJack Ashley\nJay Greenwood\nJames Watson")
+print("\nCoded by\nDaniel Kiernan\n\nBeta tested by\nJack Ashley\nJay Greenwood\nJames Watson")
