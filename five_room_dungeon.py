@@ -416,7 +416,7 @@ while response not in knife_opt_4:
         potion_opt_1 = ["put in backpack", "drink now"]
         while response1 not in potion_opt_1:
             what_do()
-            response1 = input("put in backpack/drink now\n")
+            response1 = input("put in backpack/drink now\n> ")
             if response1 == "drink now":
                 sleep(1)
                 heal()
@@ -437,7 +437,7 @@ response = ""
 knife_opt_7 = ["walk into the corridor", "flee the dungeon in terror"]
 while response not in knife_opt_7:
     what_do()
-    response = input("walk into the corridor/flee the dungeon in terror\n").lower()
+    response = input("walk into the corridor/flee the dungeon in terror\n> ").lower()
     if response == "walk into the corridor":
         sleep(1)
         print("\nLighting another torch you journey onwards, deeper into the dungeon.")
