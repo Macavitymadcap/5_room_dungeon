@@ -731,7 +731,7 @@ sleep(1)
 print("\nYou move over to the centre of the room and see that the sarcophagus is covered\nin sigils and runes.")
 sleep(4)
 if profession == "wizard":
-    print("\nFrom your years of study you know these symbols pertain to necromancy and chronomancy.")
+    print("\nFrom your years of study you know these symbols pertain to necromancy and\nchronomancy.")
     sleep(3)
 sarc_opt = ["knock on the lid", "look at the door", "flee the dungeon"]
 sarc_response =""
