@@ -806,7 +806,6 @@ while response not in reward_opt:
         sleep(5)
         print("\nYou start to scream, but soon even your breath is taken from you and all becomes\ndarkness ...")
         sleep(5)
-        print("")
         print("\nEventually you come back to consciousness to the sound of stone scraping against\nstone. A smidgen of light slowly eeks out above your head revealing an opening.")
         sleep(5)
         print("\nLifting your head up you see your are in a large chamber with a golden door to\nthe side and the face of plucky adventurer infornt of you.")
