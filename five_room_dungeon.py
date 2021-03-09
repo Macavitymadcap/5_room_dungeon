@@ -834,4 +834,4 @@ while response not in reward_opt:
         choose_option()
 print("\nThe End")
 sleep(3)
-print("\nCoded by\nDaniel Kiernan\n\nBeta tested by\nJack Ashley\nJay Greenwood\nJames Watson")
+print("\nCoded by\nDaniel Kiernan\n\nDebugging/Coding Feedback by\nBinary101010\ntotallygeek\n\nBeta tested by\nJack Ashley\nJay Greenwood\nJames Watson")
