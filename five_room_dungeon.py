@@ -99,7 +99,7 @@ def enemy_attack(player, enemy):
     elif to_hit >= player.ac:
         damage = enemy.attack_damage + enemy.attack_damage_bonus
         player.hp -= damage
-        print("\nThe " + enemy.name + " rolls " + str(to_hit) + " hitting you with its " + enemy.attack_name + " dealing " + str(damage) + "damage.")
+        print("\nThe " + enemy.name + " rolls " + str(to_hit) + " hitting you with its " + enemy.attack_name + " dealing " + str(damage) + " damage.")
         sleep(2)
         if player.hp <= 0:
             print("\nYou have been slain by the " + enemy.name + ".")
@@ -204,9 +204,6 @@ professions = ["fighter", "wizard", "rogue"]
 yes_no = ["yes", "no"]
 wall_opt = ["apologise", "deflect", "double down"]
 spin = Spinner()
-profession = "fighter"
-player = fighter
-name = "Steve"
 
 # Character Creation
 name = input("Well met adventurer! What is your name?\n> ").capitalize()
@@ -259,11 +256,9 @@ elif profession == "rogue":
     player = rogue
 else:
     player = wizard
-sleep(2)
-print("")
 show_sheet(player)
 sleep(7)
-print("And now your adventure begins ...\n")
+print("\nAnd now your adventure begins ...\n")
 sleep(1)
 for i in range(40):
     spin()
@@ -377,7 +372,7 @@ Spinner()
 print("")
 
 # Room 2 - Knife to Meet You
-print("\nThe tunnel goes on for 40 feet before opening up to a small chamber. On the\nsouth wall is a door, in the middle of the room is a table ...")
+print("\nThe tunnel goes on for 40 feet before opening up to a small chamber. On the\nsouth wall is a door, in the middle of the room is a table.")
 sleep(6)
 def knife_door():
     response = ""
@@ -480,6 +475,8 @@ while response not in knife_opt_7:
         print("Game Over!")
         sleep(2)
         quit()
+    else:
+        choose_option()
 for i in range(40):
     spin()
     sleep(0.1)
@@ -734,73 +731,74 @@ Spinner()
 print("")
 
 # Room 4 - The Skeletal Boss Fight
-def boss_door(player, skeleton):
-                        sleep(1)
-                        print("\nYou walk over to the door and see it is made of solid gold. A lock and handle\nare half way down the right side of it.")
-                        sleep(4)
-                        boss_door_opt = ["try handle", "inspect sarcophagus"]
-                        boss_door_response = ""
-                        while boss_door_response not in boss_door_opt:
-                            what_do()
-                            boss_door_response = input("try the handle/inspect the sarcophagus\n> ")
-                            if boss_door_response == "try the handle":
-                                sleep(1)
-                                print("\nThe door is locked, and you currently have no means of changing that.")
-                                sleep(3)
-                            elif boss_door_response == "inspect the sarcophagus":
-                                sarcophagus(player, skeleton)
-                            else:
-                                choose_option()
-def sarcophagus(player, skeleton):
-            sleep(1)
-            print("\nYou move over to the centre of the room and see that the sarcophagus is covered\nin sigils and runes.")
-            sleep(4)
-            if profession == "wizard":
-                print("\nFrom your years of study you know these symbols pertain to both necromancy and chronomancy.")
-                sleep(3)
-            sarc_opt = ["knock on the lid", "look at the door", "flee the dungeon"]
-            sarc_response =""
-            while sarc_response not in sarc_opt:
-                what_do()
-                sarc_response = input("knock on the lid/look at the door/flee the dungeon\n> ")
-                if sarc_response == "look at the door":
-                    boss_door(player, skeleton)
-                elif sarc_response == "knock on the lid":
-                    sleep(1)
-                    print("\nYou knock on the lid of the coffin. A few moments pass and with nothing\nhappening. Then, stone screeches against stone as the lid starts to move to the\nside")
-                    sleep(5)
-                    print("\nOut of the sarcophagus steps a skeleton with a golden key hung around its\nneck and a sword in hand. It's jaw starts to move, and despite its lack of\nlungs sighs, then speaks to you in a wispy voice.")
-                    sleep(7)
-                    print("\nIt says: 'So you are the latest challenger, eh? I was once a just like you.\nIt took all my power to get to here.'")
-                    sleep(4)
-                    print("\n'Don't be thinking this will be easy, mind. This sword isn't just for show' it\nscreams as it lunges towards you.\n")
-                    sleep(4)
-                    combat(player, skeleton)
-                elif sarc_response == "flee the dungeon":
-                    sleep(1)
-                    print("\nHaving made it to the boss fight you tactically decided to chicken out before\nyour arese could be handed to you.")
-                    sleep(4)
-                    print("\nGame Over!")
-                    sleep(2)
-                    quit()
-                else:
-                    choose_option()
 print("The passageway opens up revealing a large chamber in the centre of which is a\nstone sarcophagus.")
 sleep(3)
 print("\nOn the east wall is a door that reflects the light of your torch in a warm\ngold.")
 sleep(4)
-boss_opt_1 = ["examine the sarcophagus", "look at the door"]
+boss_door_opt_1 = ["examine the sarcophagus", "look at the door"]
 response = ""
-while response not in boss_opt_1:
+while response not in boss_door_opt_1:
     what_do()
-    response = input("examine the sarcophagus/look at the door\n> ")
-    if response == "examine the sarcophagus":
-        sarcophagus(player, skeleton)
-    elif response == "look at the door":    
-        boss_door(player, skeleton)
+    response = input("examine the sarcophagus/look at the door\n> ").lower()
+    if response == "look at the door":
+        sleep(1)
+        print("\nYou walk over to the door and see it is made of solid gold. A lock and handle\nare half way down the right side of it.")
+        sleep(4)
+        boss_door_opt_2 = ["try handle", "inspect the sarcophagus"]
+        boss_door_response = ""
+        while boss_door_response not in boss_door_opt_2:
+            what_do()
+            boss_door_response = input("try the handle/inspect the sarcophagus\n> ").lower()
+            if boss_door_response == "try the handle":
+                sleep(1)
+                print("\nThe door is locked, and you currently have no means of changing that.")
+                sleep(3)
+            elif boss_door_response == "inspect the sarcophagus":
+                break
+            else:
+                choose_option()
+    elif response == "examine the sarcophagus":
+        break
     else:
         choose_option()
 sleep(1)
+print("\nYou move over to the centre of the room and see that the sarcophagus is covered\nin sigils and runes.")
+sleep(4)
+if profession == "wizard":
+    print("\nFrom your years of study you know these symbols pertain to necromancy and chronomancy.")
+    sleep(3)
+sarc_opt = ["knock on the lid", "look at the door", "flee the dungeon"]
+sarc_response =""
+while sarc_response not in sarc_opt:
+    what_do()
+    sarc_response = input("knock on the lid/look at the door/flee the dungeon\n> ").lower()
+    if sarc_response == "look at the door":
+        sleep(1)
+        print("\nYou walk over to the door and see it is made of solid gold. A lock and handle\nare half way down the right side of it.")
+        sleep(4)
+        print("\nYou try the handle but it is locked, and you currently have no means of\nchanging that.")
+        sleep(3)
+        sarc_response = ""
+    elif sarc_response == "knock on the lid":
+        sleep(1)
+        print("\nYou knock on the lid of the coffin. A few moments pass and with nothing\nhappening. Then, stone screeches against stone as the lid starts to move to the\nside")
+        sleep(5)
+        print("\nOut of the sarcophagus steps a skeleton with a golden key hung around its\nneck and a sword in hand. It's jaw starts to move, and despite its lack of\nlungs sighs, then speaks to you in a wispy voice.")
+        sleep(7)
+        print("\nIt says: 'So you are the latest challenger, eh? I was once a just like you.\nIt took all my power to get to here.'")
+        sleep(4)
+        print("\n'Don't be thinking this will be easy, mind. This sword isn't just for show' it\nscreams as it lunges towards you.\n")
+        sleep(4)
+        combat(player, skeleton)
+    elif sarc_response == "flee the dungeon":
+        sleep(1)
+        print("\nHaving made it to the boss fight you tactically decided to chicken out before\nyour arese could be handed to you.")
+        sleep(4)
+        print("\nGame Over!")
+        sleep(2)
+        quit()
+    else:
+        choose_option()
 print("\nShrieking 'NOOOOOOOOOO!' the skeleton crumples to the ground finally dead\nrather than undead.")
 sleep(4)
 print("\nGrabbing the key from its neck you go over to the golden door, which now opens\nfor you, revealing a tunnel beyond.")
@@ -809,7 +807,7 @@ boss_opt_2 = ["go forth", "back out"]
 response = ""
 while response not in boss_opt_2:
     what_do()
-    response = input("go forth/back out\n> ")
+    response = input("go forth/back out\n> ").lower()
     if response == "go forth":
         sleep(1)
         print("\nLooking back at the skeletal remains heaped on the floor fully confidant you have\nbested the challenges of this dungeon you progress into the corridor.")
@@ -829,7 +827,6 @@ for i in range(40):
 Spinner()
 print("")
 
-door_rage = 2
 # Room 5 - Pyrrhic Reward
 print("You come to to the end of the passage and dazzled by the reflections given off\nby your torchlight in the chamber you enter.")
 sleep(5)
@@ -839,7 +836,7 @@ reward_opt = ["grab some treasure", "leave the dungeon"]
 response = ""
 while response not in reward_opt:
     what_do()
-    response = input("grab some treasure/leave the dungeon\n> ")
+    response = input("grab some treasure/leave the dungeon\n> ").lower()
     if response == "grab some treasure":
         print("\nYou reach out your hand and start loading jewels and coins into your backpack.")
         sleep(3)
@@ -880,3 +877,5 @@ while response not in reward_opt:
     else:
         choose_option()
 print("\nThe End")
+sleep(3)
+print("\nCoded by\nDaniel Kiernan.\n\nBeta tested by\nJack Ashley\nJay Greenwood\nJames Watson")
