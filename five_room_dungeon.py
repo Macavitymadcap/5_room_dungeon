@@ -777,7 +777,7 @@ while response not in boss_opt_2:
     response = input("go forth/back out\n> ").lower()
     if response == "go forth":
         sleep(1)
-        print("\nLooking back at the skeletal remains heaped on the floor fully confidant you have\nbested the challenges of this dungeon you progress into the corridor.\n")
+        print("\nLooking back at the skeletal remains heaped on the floor fully confidant you\nhave bested the challenges of this dungeon you progress into the corridor.\n")
         sleep(4)
     elif response == "back out":
         sleep(1)
