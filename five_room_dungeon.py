@@ -36,7 +36,7 @@ class PlayerCharacter(Character):
         if len(string) <= 80:
             return string
         elif len(string) > 80 and len(string) <= 161:
-            first = inventory_string[0:80].rindex(" ")
+            first = inventory[0:80].rindex(" ")
             new_string = string[0:first] + "\n" + string[first+1:]
             return new_string.capitalize()
 
