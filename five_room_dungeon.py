@@ -626,7 +626,7 @@ while response not in flirt_opt_3:
                     sleep(3)
                     print("\nThe face sizes you up and says: 'I can believe that'")
                 else:
-                    choose_options()
+                    choose_option()
             sleep(3)
             if door_rage >= 4:
                 print("\nThe door tells you flatly: 'You are, without a doubt, one of the nastiest shits\nto have ever entered this dungeon'")
