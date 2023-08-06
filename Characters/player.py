@@ -14,7 +14,7 @@ class Player:
     armour_name: str
     attack: Attack
     inventory: List[str] = field(default_factory=list)
-    player_name: str = "Darren"
+    player_name: str = field(default="Darren")
 
     def __post_init__(self):
         self.max_hit_points = copy(self.hit_points)
