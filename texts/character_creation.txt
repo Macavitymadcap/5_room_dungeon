@@ -1,0 +1,11 @@
+Well met adventurer! What is your name?
+Ahh, {}: a warrior's name!
+Or is it? Chhose your class from:
+Stab things and ask questions later, I like your style.
+When in doubt, set it aflame: a noble strategy.
+Some say sneaking around lacks honour; I say it keeps you alive.
+{} the {}, are you ready to face ...
+[b]THE FIVE ROOM DUNGEON![/b]
+Well, are you?
+A wise choice! Behold your character sheet:
+And now your adventure begins ...

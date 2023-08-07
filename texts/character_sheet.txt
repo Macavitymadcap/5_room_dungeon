@@ -1,0 +1,6 @@
+Name: {self.player_name}
+Class: {self.class_name.capitalize()}
+Hit Points: {self.hit_points}/{self.max_hit_points}
+Armour Class: {self.armour_class} ({self.armour_name})
+Attack: {self.attack.__str__()}
+Inventory: {', '.join(self.inventory)}
