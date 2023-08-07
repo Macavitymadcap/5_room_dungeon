@@ -2,6 +2,8 @@ from Characters.attack import Attack
 from Characters.monster import Monster
 from Characters.player import Player
 
+character_class_names = ["fighter", "wizard", "rogue"]
+
 fighter = Player(
     class_name="fighter", 
     hit_points=12, 
